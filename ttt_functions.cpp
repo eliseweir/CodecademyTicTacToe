@@ -1,4 +1,6 @@
 #include <iostream>
+#include<limits>
+using namespace std;
 
 // draw the tic-tac-toe board
 // written by Codecademy.com
@@ -22,15 +24,34 @@ void draw(char board[]) {
     std::cout << "\n";
 }
 
+// take a turn putting down a marker
 void take_turn(char board[], int winner, int player, int &plays) {
     int position;
     bool valid_play = false;
 
+    // while the play is not valid and there is no winner, continue prompting
     while (!valid_play && winner == -1) {
+        // draw the board and ask the player to pick a position
         draw(board);
         std::cout << "Player "<< player << ": Pick a position (1-9): ";
         std::cin >> position;
 
+        // check for non-integer or non 1-9 input
+        while(1) {
+            if (std::cin.fail() || position < 1 || position > 9) {
+                std::cin.clear();
+                std::cin.ignore(numeric_limits<streamsize>::max(),'\n');
+                draw(board);
+                std::cout << "Player "<< player << ": Pick a position (1-9): ";
+                std::cin >> position;
+            }
+            if (!std::cin.fail()) {
+                break;
+            }
+        }
+
+        // if the space is empty, fill with the player's marker, mark it as 
+        // a valid play, and iterate the total number of plays
         if(board[position - 1] != 'X' && board[position - 1] != 'O') {
             if (player == 1) {
                 board[position - 1] = 'X';
@@ -125,6 +146,7 @@ int check_winner(char board[], int winner, int plays) {
     return winner;
 }
 
+// output the result of the game
 void end_game(char board[], int winner) {
     std::cout << "\nFinal board: \n";
     draw(board);

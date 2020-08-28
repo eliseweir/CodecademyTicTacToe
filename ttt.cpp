@@ -1,5 +1,7 @@
 #include <iostream>
+#include<limits>
 #include "ttt_functions.hpp"
+using namespace std;
 
 int main() {
     int plays = 0; // number of turns taken
