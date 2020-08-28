@@ -2,45 +2,21 @@
 #include "ttt_functions.hpp"
 
 int main() {
-    int position;
-    int plays = 0;
-    int winner = -1;
-    bool valid_play = false;
+    int plays = 0; // number of turns taken
+    int winner = -1; // current winner: no one -1, tie 0, player 1, or player 2
     char board[] = {'1','2','3','4','5','6','7','8','9'};
 
+    // continue to play while there is no winner and the board is not filled up
     while (winner == -1 && plays < 9) {
 
-        while (!valid_play && winner == -1) {
-            draw(board);
-            std::cout << "Player 1: Pick a position (1-9): ";
-            std::cin >> position;
-
-            if(board[position - 1] != 'X' && board[position - 1] != 'O') {
-                board[position - 1] = 'X';
-                valid_play = true;
-                plays++;
-            }
-        }
-        valid_play = false;
+        // have player 1 take a turn
+        take_turn(board, winner, 1, plays);
 
         // check if the game has been won
         winner = check_winner(board, winner, plays);
 
-        while (!valid_play && winner == -1) {
-            draw(board);
-            std::cout << "Player 2: Pick a position (1-9): ";
-            std::cin >> position;
-
-            if(board[position - 1] != 'X' && board[position - 1] != 'O') {
-                board[position - 1] = 'O';
-                valid_play = true;
-                plays++;
-                if (plays >= 9) {
-                    winner = 0;
-                }
-            }
-        }
-        valid_play = false;
+        // have player 2 take a turn
+        take_turn(board, winner, 2, plays);
 
         // check if the game has been won
         winner = check_winner(board, winner, plays);

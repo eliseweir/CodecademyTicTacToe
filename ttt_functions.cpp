@@ -22,6 +22,28 @@ void draw(char board[]) {
     std::cout << "\n";
 }
 
+void take_turn(char board[], int winner, int player, int &plays) {
+    int position;
+    bool valid_play = false;
+
+    while (!valid_play && winner == -1) {
+        draw(board);
+        std::cout << "Player "<< player << ": Pick a position (1-9): ";
+        std::cin >> position;
+
+        if(board[position - 1] != 'X' && board[position - 1] != 'O') {
+            if (player == 1) {
+                board[position - 1] = 'X';
+            }
+            else if (player == 2) {
+                board[position - 1] = 'O';
+            }
+            valid_play = true;
+            plays++;
+        }
+    }
+}
+
 // check if the game has been won
 int check_winner(char board[], int winner, int plays) {
     // first row
