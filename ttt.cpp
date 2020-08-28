@@ -1,5 +1,6 @@
 #include <iostream>
 #include<limits>
+#include <string>
 #include "ttt_functions.hpp"
 using namespace std;
 

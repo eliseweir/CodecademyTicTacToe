@@ -1,11 +1,11 @@
 #include <iostream>
 #include<limits>
+#include <string>
 using namespace std;
 
 // draw the tic-tac-toe board
 // written by Codecademy.com
 void draw(char board[]) {
-
     std::cout << "     |     |      \n";
 
     std::cout << "  " << board[0] << "  |  " << board[1] << "  |  " << board[2] << "\n";
@@ -32,6 +32,7 @@ void take_turn(char board[], int winner, int player, int &plays) {
     // while the play is not valid and there is no winner, continue prompting
     while (!valid_play && winner == -1) {
         // draw the board and ask the player to pick a position
+        cout << string( 100, '\n' );
         draw(board);
         std::cout << "Player "<< player << ": Pick a position (1-9): ";
         std::cin >> position;
@@ -41,6 +42,7 @@ void take_turn(char board[], int winner, int player, int &plays) {
             if (std::cin.fail() || position < 1 || position > 9) {
                 std::cin.clear();
                 std::cin.ignore(numeric_limits<streamsize>::max(),'\n');
+                cout << string( 100, '\n' );
                 draw(board);
                 std::cout << "Player "<< player << ": Pick a position (1-9): ";
                 std::cin >> position;
@@ -146,9 +148,23 @@ int check_winner(char board[], int winner, int plays) {
     return winner;
 }
 
+// remove position numbers from the board
+void clean_board(char board[]) {
+    for (int k=0; k < 9; k++) {
+        if (board[k] != 'X' && board[k] != 'O') {
+            board[k] = ' ';
+        }
+    }
+}
+
 // output the result of the game
 void end_game(char board[], int winner) {
-    std::cout << "\nFinal board: \n";
+    // clean up the board for display
+    clean_board(board);
+
+    // output the final board and the winner
+    cout << string( 100, '\n' );
+    std::cout << "\nFinal board:\n";
     draw(board);
     if (winner == 0) {
         std::cout << "Tied game!";
